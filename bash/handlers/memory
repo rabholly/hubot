@@ -1,0 +1,13 @@
+#!/bin/bash
+ps xmo rss=,pmem=,comm= | while read rss pmem comm; ((n++<5)); do
+ 
+    size="$[rss/1024]";
+    short=$[4-${#size}];
+    size="(${size}M)";
+    i=0;
+    while ((i++ < short)); do size=" $size"; done;
+ 
+    pmem="${pmem%%.*}"
+ 
+    echo "$pmem% $size $(basename "$comm")";
+done
